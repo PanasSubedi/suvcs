@@ -30,15 +30,3 @@ def apply_delta(file_content:list, delta:list, revert:bool=False) -> list:
             chunk_cursor += 1
 
     return file_content
-
-if __name__ == '__main__':
-    import os
-
-    with open(os.path.join(os.getcwd(), 'test_delta_dummy_files', '1_old.txt'), 'r') as file:
-        old_1 = file.readlines()
-
-    with open(os.path.join(os.getcwd(), 'test_delta_dummy_files', '1_new.txt'), 'r') as file:
-        new_1 = file.readlines()
-
-    for line in get_delta_as_list(old_1, new_1):
-        print(line, end='')
