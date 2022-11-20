@@ -1,0 +1,3 @@
+Hello world is better than Lorem Ipsum
+
+Sometimes I like to test stuff out. Not always though.
