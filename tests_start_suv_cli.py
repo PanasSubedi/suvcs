@@ -3,7 +3,7 @@ import unittest
 from helpers.test_helpers import CaptureOutput
 from suv import exit
 
-class TestApplyDelta(unittest.TestCase):
+class TestSUVCLI(unittest.TestCase):
 
     def test_exit(self):
         with CaptureOutput() as output:
