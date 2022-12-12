@@ -7,10 +7,13 @@ def get_author(display=False):
     if os.path.exists(author_file_path):
         with open(author_file_path, 'rb') as file:
             author = pickle.load(file)
-        if display:
-            print("Name: {}\nEmail: {}\n".format(author[0], author[1]))
-            return
-        return author
+        if len(author) == 2:
+            if display:
+                print("Name: {}\nEmail: {}".format(author[0], author[1]))
+                return
+            return author
+        else:
+            return None
     else:
         return None
 
