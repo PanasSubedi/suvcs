@@ -36,7 +36,3 @@ class TestInit(unittest.TestCase):
         self.assertEqual(len(output), 2)
         self.assertTrue(output[0].startswith("Initialized repo at"))
         self.assertEqual(output[1], "SUV already initialized.")
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -12,7 +12,3 @@ class TestSUVCLI(unittest.TestCase):
         self.assertEqual(len(output), 1)
         self.assertTrue(output[0].startswith('Exiting'))
         self.assertTrue(exit_output)
-
-
-if __name__ == '__main__':
-    unittest.main()

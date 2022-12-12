@@ -1,5 +1,8 @@
 import os
 
+from helpers.app_helpers import get_working_directory
+from suv_data import get_suv_directories
+
 def create_directory(directory):
     if not os.path.exists(directory):
         os.mkdir(directory)
@@ -8,14 +11,7 @@ def create_directory(directory):
 
 def create_directory_structure():
     working_directory = get_working_directory()
-    directories = {
-        'working': working_directory,
-        'suv': os.path.join(working_directory, '.suv'),
-        'head': os.path.join(working_directory, '.suv', 'head'),
-        'deltas': os.path.join(working_directory, '.suv', 'deltas'),
-        'users': os.path.join(working_directory, '.suv', 'users')
-    }
-
+    directories = get_suv_directories(working_directory)
     directories_created = False
     for directory in directories:
         directories_created = create_directory(directories.get(directory)) or directories_created
@@ -25,22 +21,10 @@ def create_directory_structure():
     else:
         return False, None
 
-def get_working_directory():
-
-    from dotenv import load_dotenv
-    load_dotenv()
-
-    if int(os.getenv('DEBUG', 0)):
-        return os.path.join(os.getcwd(), 'working_directory')
-    elif int(os.getenv('TEST', 0)):
-        return os.path.join(os.getcwd(), 'test_working_directory')
-    else:
-        return os.path.join(os.getcwd())
-
-def init():
+def init(verbose=True):
     directories_created, working_directory = create_directory_structure()
 
     if directories_created:
         print("Initialized repo at {}".format(working_directory))
-    else:
+    elif verbose:
         print("SUV already initialized.")

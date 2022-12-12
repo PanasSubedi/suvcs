@@ -77,9 +77,3 @@ class TestGetDeltaAsList(unittest.TestCase):
         self.assertEqual(len(delta), 6)
         self.assertTrue(delta[3].startswith('-'))
         self.assertTrue(delta[4].startswith('-'))
-
-
-
-
-if __name__ == '__main__':
-    unittest.main()
