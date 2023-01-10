@@ -1,10 +1,11 @@
 marker = "$> "
 valid_commands = [
-    "exit", "init", "set author", "author"
+    "exit", "init", "set author", "author", "diff"
 ]
 
 from functions.init import init
 from functions.users import set_author, get_author
+from functions.diff import diff
 
 def exit():
     print("Exiting...")
@@ -19,6 +20,7 @@ if __name__ == '__main__':
             elif command == "init": init()
             elif command == "set author": set_author()
             elif command == "author": get_author(display=True)
+            elif command == "diff": diff()
 
         else:
             print("Invalid command.")

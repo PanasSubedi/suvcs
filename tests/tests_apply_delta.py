@@ -2,7 +2,7 @@ import os
 
 import unittest
 
-from delta import get_delta_as_list, apply_delta
+from helpers.delta_helpers import get_delta_as_list, apply_delta
 
 class TestApplyDelta(unittest.TestCase):
 

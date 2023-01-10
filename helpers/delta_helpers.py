@@ -1,6 +1,10 @@
 import difflib
 
-def get_delta_as_list(old:list, new:list) -> None:
+def get_delta_from_filename(file_path1:str, file_path2:str) -> list:
+    with open(file_path1, 'r') as file1, open(file_path2, 'r') as file2:
+        return get_delta_as_list(file1.readlines(), file2.readlines())
+
+def get_delta_as_list(old:list, new:list) -> list:
     return [line for line in difflib.unified_diff(old, new)]
 
 def apply_delta(file_content:list, delta:list, revert:bool=False) -> list:
