@@ -3,7 +3,7 @@ import unittest
 from helpers.test_helpers import CaptureOutput
 from functions.init import init
 
-import os
+import shutil, os
 
 class TestInit(unittest.TestCase):
 
@@ -12,10 +12,7 @@ class TestInit(unittest.TestCase):
         os.environ['TEST'] = '1'
 
     def tearDown(self):
-        for root, dirs, _ in os.walk(os.path.join(os.getcwd(), 'test_working_directory'), topdown=False):
-            for directory_name in dirs:
-                os.rmdir(os.path.join(root, directory_name))
-        os.rmdir(os.path.join(os.getcwd(), 'test_working_directory'))
+        shutil.rmtree(os.path.join(os.getcwd(), 'test_working_directory'))
 
     def test_init(self):
         with CaptureOutput() as output:
