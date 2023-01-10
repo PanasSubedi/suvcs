@@ -73,7 +73,6 @@ class TestDiff(unittest.TestCase):
             init()
 
         lines_1 = ["Hello world", "something else"]
-        lines_2 = ["Hello world 2"]
 
         # in working directory
         TestDiff._create_file(os.path.join(get_working_directory(), "file_1.txt"), lines_1)
@@ -113,7 +112,6 @@ class TestDiff(unittest.TestCase):
         with CaptureOutput() as _:
             init()
 
-        files = ["file_1.txt"]
         lines = ["Hello", "world"]
         TestDiff._create_file(os.path.join(get_working_directory(), "file_1.txt"), lines)
         TestDiff._create_file(os.path.join(get_working_directory(), '.suv', 'head', "file_1.txt"), lines)
@@ -126,6 +124,6 @@ class TestDiff(unittest.TestCase):
 
     @staticmethod
     def _create_file(file_path, lines):
-        with open(file_path, 'w+') as file:
+        with open(file_path, 'w+', encoding="utf-8") as file:
             file.writelines(lines)
         
