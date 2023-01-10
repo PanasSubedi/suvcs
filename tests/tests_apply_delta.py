@@ -2,7 +2,7 @@ import os
 
 import unittest
 
-from helpers.delta_helpers import get_delta_as_list, apply_delta
+from helpers.delta_helpers import get_delta_from_list, apply_delta
 
 class TestApplyDelta(unittest.TestCase):
 
@@ -12,7 +12,7 @@ class TestApplyDelta(unittest.TestCase):
             file1 = file.readlines()
         with open(os.path.join(os.getcwd(), 'test_delta_dummy_files', filename2), 'r') as file:
             file2 = file.readlines()
-        return get_delta_as_list(file1, file2)
+        return get_delta_from_list(file1, file2)
 
     def test_apply_delta(self):
         delta = TestApplyDelta._get_delta('3.txt', '4.txt')
@@ -45,7 +45,7 @@ class TestGetDeltaAsList(unittest.TestCase):
             file1 = file.readlines()
         with open(os.path.join(os.getcwd(), 'test_delta_dummy_files', filename2), 'r') as file:
             file2 = file.readlines()
-        return get_delta_as_list(file1, file2)
+        return get_delta_from_list(file1, file2)
 
     def test_get_delta_as_list_1(self):
         delta = TestGetDeltaAsList._get_delta('1.txt', '2.txt')
