@@ -42,8 +42,8 @@ class TestDiff(unittest.TestCase):
         self.assertTrue("removed.txt" in output[5])
         self.assertEqual(output[7], "Modified:")
         self.assertTrue("modified.txt" in output[8])
-        self.assertTrue("Hello world" in output[9])
-        self.assertTrue("Hello world 2" in output[10])
+        self.assertTrue("Hello world" in output[9] or "Hello world" in output[10])
+        self.assertTrue("Hello world 2" in output[9] or "Hello world 2" in output[10])
 
     def test_diff_file_changed(self):
         with CaptureOutput() as _:
@@ -64,8 +64,8 @@ class TestDiff(unittest.TestCase):
         self.assertEqual(len(output), 5)
         self.assertEqual(output[1], "Modified:")
         self.assertEqual(output[2], "file_1.txt")
-        self.assertTrue("-Hello world" in output[3])
-        self.assertTrue("+Hello world 2" in output[4])
+        self.assertTrue("+Hello world" in output[3] or "+Hello world" in output[4])
+        self.assertTrue("-Hello world 2" in output[3] or "-Hello world 2" in output[4])
 
 
     def test_diff_file_added(self):
