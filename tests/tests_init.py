@@ -24,7 +24,7 @@ class TestInit(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(os.getcwd(), 'test_working_directory', '.suv', 'deltas')))
         self.assertTrue(os.path.exists(os.path.join(os.getcwd(), 'test_working_directory', '.suv', 'head')))
         self.assertTrue(os.path.exists(os.path.join(os.getcwd(), 'test_working_directory', '.suv', 'users')))
-        self.assertTrue(os.path.exists(os.path.join(os.getcwd(), 'test_working_directory', '.suv', 'stage')))
+        self.assertTrue(os.path.exists(os.path.join(os.getcwd(), 'test_working_directory', '.suv', 'commits')))
 
     def test_two_init_calls(self):
         with CaptureOutput() as output:

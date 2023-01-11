@@ -5,7 +5,7 @@ suv_directories = {
     'head': os.path.join('.suv', 'head'),
     'deltas': os.path.join('.suv', 'deltas'),
     'users': os.path.join('.suv', 'users'),
-    'stage': os.path.join('.suv', 'stage'),
+    'commits': os.path.join('.suv', 'commits'),
 }
 
 def get_suv_directories(working_directory):
