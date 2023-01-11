@@ -1,5 +1,45 @@
-def add():
-    print("Added files to the staging area.")
+from functions.diff import diff
+from functions.users import get_author
+from helpers.app_helpers import check_init, get_working_directory
+from helpers.commit_helpers import update_head_at_commit, store_commit, add_commit_to_tree, set_current_commit
 
+import json
+
+from hashlib import sha256
+from datetime import datetime
+
+def _hash_commit(commit_data):
+    commit_string = json.dumps(commit_data, sort_keys=True)
+    return sha256(commit_string.encode('utf-8')).hexdigest()
+
+@check_init
 def commit():
-    pass
+
+    author = get_author()
+    if not author:
+        print("Author not set.")
+        return
+
+    valid_input = False
+    while not valid_input:
+        message = input("Commit message: ")
+        if len(message) > 0:
+            valid_input = True
+
+    changes = diff()
+    if sum([len(change_list) for change_list in changes]) == 0:
+        print("No changes to commit.")
+    else:
+        commit_data = {
+            'author': author,
+            'changes': changes,
+            'message': message,
+            'timestamp': int(datetime.utcnow().timestamp())
+        }
+
+        commit_data['hash'] = _hash_commit(commit_data)
+        
+        store_commit(commit_data)
+        add_commit_to_tree(commit_data.get('hash'))
+        set_current_commit(commit_data.get('hash'))
+        update_head_at_commit(changes)
