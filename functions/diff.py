@@ -3,7 +3,7 @@ import os
 from helpers.app_helpers import get_working_directory, check_init, get_file_set, print_in_color
 from helpers.delta_helpers import get_delta_from_filename, get_delta_from_list
 
-def get_changes():
+def _get_changes():
     working_directory = get_working_directory()
     head_directory = os.path.join(working_directory, '.suv', 'head')
 
@@ -19,7 +19,7 @@ def get_changes():
     removed_files = []
 
     for file in common_files:
-        delta = get_delta_from_filename(os.path.join(working_directory, file), os.path.join(head_directory, file))
+        delta = get_delta_from_filename(os.path.join(head_directory, file), os.path.join(working_directory, file))
         if len(delta) != 0:
             changed_files.append((file, delta))
 
@@ -37,7 +37,7 @@ def get_changes():
 
 @check_init
 def diff():
-    new_files, removed_files, changed_files = get_changes()
+    new_files, removed_files, changed_files = _get_changes()
 
     printed = False
     if len(new_files) > 0:
@@ -66,4 +66,6 @@ def diff():
 
     if not printed:
         print("No changes")
+
+    return new_files, removed_files, changed_files
             
