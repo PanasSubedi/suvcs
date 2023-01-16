@@ -3,6 +3,7 @@ import unittest
 from helpers.test_helpers import CaptureOutput
 from helpers.commit_helpers import store_commit, add_commit_to_tree, display_commit_tree, set_current_commit, update_head_at_commit
 from helpers.app_helpers import get_working_directory
+from functions.diff import diff
 
 from functions.init import init
 from functions.commit import _hash_commit
@@ -43,10 +44,29 @@ class TestCommit(unittest.TestCase):
         TestCommit._create_file(os.path.join(get_working_directory(), '.suv', 'head', 'removed.txt'), lines_2)
         TestCommit._create_file(os.path.join(get_working_directory(), '.suv', 'head', 'unchanged.txt'), lines_1)
 
-        update_head_at_commit()
+        with CaptureOutput() as _:
+            changes = diff()
+
+        update_head_at_commit(changes)
+        new, removed, modified = changes
+
+        for file in new:
+            self.assertEqual(file[0], 'created.txt')
+            self.assertEqual(len(file[1]), 4)
+            self.assertEqual(file[1][2], '@@ -0,0 +1 @@\n')
+
+        for file in removed:
+            self.assertEqual(file[0], 'removed.txt')
+            self.assertEqual(len(file[1]), 4)
+            self.assertEqual(file[1][2], '@@ -1 +0,0 @@\n')
+
+        for file in modified:
+            self.assertEqual(file[0], 'modified.txt')
+            self.assertEqual(len(file[1]), 5)
+            self.assertEqual(file[1][2], '@@ -1 +1 @@\n')
 
 
-    def test_add_commit_to_tree_two_commits(self):
+    def test_set_current_commit(self):
         random_hash_1 = _hash_commit("Hello world 1")
         random_hash_2 = _hash_commit("Hello world 2")
 

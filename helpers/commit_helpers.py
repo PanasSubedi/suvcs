@@ -86,7 +86,5 @@ def update_head_at_commit(changes):
         
         new_file_content = apply_delta(file_content, delta)
         
-        for line in new_file_content:
-            print(line)
         with open(os.path.join(get_working_directory(), '.suv', 'head', file_name), 'w', encoding='utf-8') as file:
             file.writelines(new_file_content)
