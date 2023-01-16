@@ -1,13 +1,14 @@
 marker = "$> "
 valid_commands = [
     "exit", "init", "set author", "author", "diff",
-    "status", "commit"
+    "status", "commit", "checkout",
 ]
 
 from functions.init import init
 from functions.users import set_author, get_author
 from functions.diff import diff
 from functions.commit import commit
+from functions.checkout import checkout
 
 def exit():
     print("Exiting...")
@@ -22,6 +23,7 @@ if __name__ == '__main__':
             elif command == "init": init()
             elif command == "set author": set_author()
             elif command == "author": get_author(display=True)
+            elif command == "checkout": checkout()
             elif command in ("diff", "status"): diff()
             elif command == "commit": commit()
 
