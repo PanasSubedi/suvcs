@@ -37,7 +37,7 @@ def add_commit_to_tree(commit_hash):
     commit_metadata_file = os.path.join(get_working_directory(), '.suv', 'commits', 'commit-metadata.suv')
     
     commit_tree, parent_hash = get_commit_tree(commit_metadata_file)
-    commit_tree.create_node(commit_hash, commit_hash, parent=parent_hash)
+    commit_tree.create_node(commit_hash, commit_hash[:10], parent=parent_hash[:10] if parent_hash else None)
     store_commit_tree(commit_metadata_file, commit_tree)
 
 def set_current_commit(commit_hash):
