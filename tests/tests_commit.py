@@ -102,7 +102,7 @@ class TestCommit(unittest.TestCase):
 
         store_commit(commit_data)
 
-        commit_file = os.path.join(get_working_directory(), '.suv', 'commits', commit_data.get('hash'))
+        commit_file = os.path.join(get_working_directory(), '.suv', 'commits', commit_data.get('hash')[:10])
         self.assertTrue(os.path.exists(commit_file))
 
         with open(commit_file, 'rb') as file:

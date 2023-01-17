@@ -54,8 +54,14 @@ def set_current_commit(commit_hash):
     with open(commit_metadata_file, 'wb+') as file:
         pickle.dump(commit_metadata, file, protocol=pickle.HIGHEST_PROTOCOL)
 
+def get_commit(commit_hash):
+    with open(os.path.join(get_working_directory(), '.suv', 'commits', commit_hash), 'rb') as file:
+        commit_data = pickle.load(file)
+
+    return commit_data
+
 def store_commit(commit_data):
-    with open(os.path.join(get_working_directory(), '.suv', 'commits', commit_data.get('hash')), 'wb') as file:
+    with open(os.path.join(get_working_directory(), '.suv', 'commits', commit_data.get('hash')[:10]), 'wb') as file:
         pickle.dump(commit_data, file, protocol=pickle.HIGHEST_PROTOCOL)
 
 def update_head_at_commit(changes):
