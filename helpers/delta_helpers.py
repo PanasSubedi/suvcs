@@ -21,6 +21,10 @@ def apply_delta(file_content:list, delta:list, revert:bool=False) -> list:
             chunk_start_index = int(line.split()[diff_metadata_index].split(',')[0][1:])-1+net_change
             chunk_cursor = 0
 
+            # make sure that the last index -1 of the list is not overwritten in case of empty original file
+            if chunk_start_index < 0:
+                chunk_start_index = 0
+
         elif line.startswith(insert_flag):
             file_content.insert(chunk_start_index+chunk_cursor, line[1:])
             net_change += 1
