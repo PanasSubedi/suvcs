@@ -34,12 +34,13 @@ def commit():
             'author': author,
             'changes': changes,
             'message': message,
-            'timestamp': int(datetime.utcnow().timestamp())
         }
+        commit_hash = _hash_commit(commit_data)
 
-        commit_data['hash'] = _hash_commit(commit_data)
+        commit_data['hash'] = commit_hash
+        commit_data['timestamp'] = int(datetime.utcnow().timestamp())
         
         store_commit(commit_data)
-        add_commit_to_tree(commit_data.get('hash'))
-        set_current_commit(commit_data.get('hash'))
+        add_commit_to_tree(commit_hash)
+        set_current_commit(commit_hash)
         update_head_at_commit(changes)
