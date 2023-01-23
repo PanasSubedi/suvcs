@@ -40,6 +40,16 @@ def add_commit_to_tree(commit_hash):
     commit_tree.create_node(commit_hash, commit_hash[:10], parent=parent_hash[:10] if parent_hash else None)
     store_commit_tree(commit_metadata_file, commit_tree)
 
+def get_current_commit():
+    commit_metadata_file = os.path.join(get_working_directory(), '.suv', 'commits', 'commit-metadata.suv')
+    
+    if os.path.exists(commit_metadata_file):
+        with open(commit_metadata_file, 'rb') as file:
+            commit_metadata = pickle.load(file)
+            return commit_metadata.get("current_commit")
+    else:
+        return None
+        
 def set_current_commit(commit_hash):
     commit_metadata_file = os.path.join(get_working_directory(), '.suv', 'commits', 'commit-metadata.suv')
     
