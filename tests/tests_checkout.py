@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import os, shutil
 
-from helpers.app_helpers import get_working_directory, testinput
+from helpers.app_helpers import get_working_directory
 from helpers.test_helpers import CaptureOutput
 
 from functions.checkout import _get_commit_hash, checkout
@@ -26,8 +26,8 @@ class TestCheckout(unittest.TestCase):
             init()
             set_author()
         
-        first_lines = ["1. This is line 1", "2. This is line 2"]
-        second_lines = ["1. This is line 1", "2. This is line 2", "3. This is line 3"]
+        first_lines = ["1. This is line 1\n", "2. This is line 2\n"]
+        second_lines = ["1. This is line 1\n", "2. This is line 2\n", "3. This is line 3\n"]
 
         TestCheckout._create_file(os.path.join(get_working_directory(), "file_1.txt"), first_lines)
         with CaptureOutput() as _:
@@ -55,8 +55,38 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(output[0], output[1], output[2])
         self.assertEqual(input_hash, '1234567890')
 
-    def test_checkout(self, mock_input):
-        pass
+    @patch('builtins.input', side_effect=['invld_hash'])
+    def test_checkout_invalid_hash(self, mock_input):
+        with CaptureOutput() as output:
+            checkout()
+
+        self.assertEqual(len(output), 2)
+        self.assertEqual(output[1], "Commit not found.")
+
+    @patch('builtins.input', side_effect=['1218186291', '4e5cc68a99'])
+    def test_checkout_valid(self, mock_input):
+
+        with open(os.path.join(get_working_directory(), 'file_1.txt'), 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+        self.assertEqual(len(lines), 3)
+
+        with CaptureOutput() as output:
+            checkout()
+
+        with open(os.path.join(get_working_directory(), 'file_1.txt'), 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+
+        self.assertEqual(len(output), 1)
+        self.assertEqual(len(lines), 2)
+
+        with CaptureOutput() as output:
+            checkout()
+
+        with open(os.path.join(get_working_directory(), 'file_1.txt'), 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+        
+        self.assertEqual(len(output), 1)
+        self.assertEqual(len(lines), 3)
 
         
 
