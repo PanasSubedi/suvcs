@@ -3,6 +3,12 @@ import pickle
 
 from helpers.app_helpers import get_working_directory
 
+def get_current_branch():
+    branch_data = get_branch_data()
+    if 'current_branch' in branch_data:
+        return branch_data['current_branch']
+    return None
+
 def get_branch_data():
     branch_metadata_file = os.path.join(get_working_directory(), '.suv', 'branches', 'branch-metadata.suv')
     if os.path.exists(branch_metadata_file):

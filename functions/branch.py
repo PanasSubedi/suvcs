@@ -1,5 +1,8 @@
-from helpers.commit_helpers import get_current_commit
+from helpers.commit_helpers import get_current_commit, set_current_commit
 from helpers.branch_helpers import get_branch_data, store_branch_data
+from helpers.app_helpers import print_in_color
+
+from functions.checkout import checkout
 
 def branch():
     branch_data = get_branch_data()
@@ -8,10 +11,30 @@ def branch():
         print("No branches.")
     else:
         for branch in branch_data:
-            print(branch)
+            if branch == "current_branch": continue
 
-def set_branch():
-    pass
+            if branch == branch_data.get("current_branch"):
+                print_in_color("* {}".format(branch), "OKGREEN")
+            else:
+                print(branch)
+
+def set_branch(branch_name=""):
+    branch_data = get_branch_data()
+    branch_name = _get_branch_name(branch_name)
+
+    if len(branch_data.keys()) == 0:
+        print("No branches.")
+    else:
+        if branch_name in branch_data:
+            branch_data["current_branch"] = branch_name
+            store_branch_data(branch_data)
+
+            if len(branch_data[branch_name]['commits']) != 0:
+                set_current_commit(branch_data[branch_name]['commits'][-1])
+                checkout(branch_data[branch_name]['commits'][-1][:10])
+            print("Branch set to {}.".format(branch_name))
+        else:
+            print("Branch does not exist.")
 
 def _get_branch_name(branch_name):
     while True:
@@ -29,6 +52,13 @@ def add_branch(branch_name=""):
     if new_branch in branch_data:
         print("Branch already exists.")
     else:
-        branch_data[new_branch] = get_current_commit()
+        current_commit = get_current_commit()
+        if current_commit is None:
+            commits = []
+        else:
+            commits = [current_commit, ]
+            
+        branch_data[new_branch] = {}
+        branch_data[new_branch]['commits'] = commits
         store_branch_data(branch_data)
         print("Branch added.")
