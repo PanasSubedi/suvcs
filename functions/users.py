@@ -3,6 +3,8 @@ from helpers.app_helpers import get_working_directory, check_init
 
 @check_init
 def get_author(display=False):
+    '''Return (and display) the author of the working directory.'''
+
     author_file_path = os.path.join(get_working_directory(), '.suv', 'users', 'author.suvd')
     if os.path.exists(author_file_path):
         with open(author_file_path, 'rb') as file:
@@ -19,6 +21,8 @@ def get_author(display=False):
 
 @check_init
 def set_author():
+    '''Set a new author for the working directory'''
+
     author = get_author()
     if author is not None:
         choice = _get_overwrite_choice(author)
@@ -26,7 +30,7 @@ def set_author():
         choice = True
 
     if choice:
-        name_and_email = _get_name_and_email()
+        name_and_email = _get_name_and_email_input()
         author_file_path = os.path.join(get_working_directory(), '.suv', 'users', 'author.suvd')
         with open(author_file_path, 'wb+') as file:
             pickle.dump(name_and_email, file, protocol=pickle.HIGHEST_PROTOCOL)
@@ -36,6 +40,8 @@ def set_author():
         print("Author unchanged.")
 
 def _get_overwrite_choice(author):
+    '''Check whether user wants to overwrite the current author of the working directory.'''
+
     valid_choice = False
     while not valid_choice:
         choice = input("Author already set as:\nName: {}\nEmail: {}\n\nOverwrite? (Y/N) ".format(author[0], author[1]))
@@ -45,7 +51,9 @@ def _get_overwrite_choice(author):
 
     return choice == 'y'
 
-def _get_name_and_email():
+def _get_name_and_email_input():
+    '''Get a name and email as input for a new author.'''
+
     import re
     def check_name_validity(name):
         name_regex = re.compile(r'[a-zA-Z ]+')

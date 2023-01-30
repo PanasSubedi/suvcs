@@ -9,11 +9,13 @@ from hashlib import sha256
 from datetime import datetime
 
 def _hash_commit(commit_data):
+    '''Provides a hash value for a given commit'''
     commit_string = json.dumps(commit_data, sort_keys=True)
     return sha256(commit_string.encode('utf-8')).hexdigest()
 
 @check_init
 def commit():
+    '''Stores a new commit if the working directory has been updated'''
 
     author = get_author()
     if not author:
@@ -28,7 +30,10 @@ def commit():
 
     changes = diff()
     if sum([len(change_list) for change_list in changes]) == 0:
+        # changes has 'new', 'updated', and 'deleted' tuples
+        # if the sum of their lengths is 0, there are no changes
         print("No changes to commit.")
+
     else:
         commit_data = {
             'author': author,
@@ -36,10 +41,12 @@ def commit():
             'message': message,
         }
         commit_hash = _hash_commit(commit_data)
-
-        commit_data['hash'] = commit_hash
-        commit_data['timestamp'] = int(datetime.utcnow().timestamp())
         
+        # timestamp added after hashing to make hash value
+        # consistent and replicable
+        commit_data['timestamp'] = int(datetime.utcnow().timestamp())
+        commit_data['hash'] = commit_hash
+
         store_commit(commit_data)
         add_commit_to_tree(commit_hash)
         set_current_commit(commit_hash)

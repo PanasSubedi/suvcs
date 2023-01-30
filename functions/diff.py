@@ -4,6 +4,8 @@ from helpers.app_helpers import get_working_directory, check_init, get_file_set,
 from helpers.delta_helpers import get_delta_from_filename, get_delta_from_list
 
 def _get_changes():
+    '''Get a list of new, changed, and removed files with their respective deltas'''
+
     working_directory = get_working_directory()
     head_directory = os.path.join(working_directory, '.suv', 'head')
 
@@ -37,6 +39,8 @@ def _get_changes():
 
 @check_init
 def diff():
+    '''Displays added, removed, and modified files. For modified files, it also shows the modified lines.'''
+
     new_files, removed_files, changed_files = _get_changes()
 
     printed = False
@@ -68,4 +72,3 @@ def diff():
         print("No changes")
 
     return new_files, removed_files, changed_files
-            

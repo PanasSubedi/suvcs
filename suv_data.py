@@ -9,6 +9,8 @@ suv_directories = {
 }
 
 def get_suv_directories(working_directory):
+    '''Returns all the default directories inside .suv'''
+
     directories = {}
     directories['working'] = working_directory
     for directory in suv_directories:
