@@ -1,6 +1,6 @@
 # SuVCS - A simple version control system
 
-SuVCS is a simple version control system made as a personal project to understand how version control systems work.
+SuVCS is a simple version control system made as a personal project to understand how version control systems work. The program is in progress at the moment. More functionalities are being added.
 
 ## Use
 
@@ -16,11 +16,11 @@ SuVCS is a simple version control system made as a personal project to understan
 1. ```python3 suv.py```
 2. ```init```
 
-The ```init``` command creates a ```working directory``` folder in the current directory. SuVCS keeps a track of all the files within that directory.
+```init``` creates a ```working directory``` inside the current directory. SuVCS keeps a track of all the files within ```working directory```.
 
 ### Available commands
 
-Use ```python3 suv.py``` to start the version control system. After using ```init```, you can use the following commands at the moment:
+Use ```python3 suv.py``` to start the version control system. After using ```init```, you can use the following commands:
 
 #### exit
 
