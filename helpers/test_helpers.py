@@ -2,6 +2,7 @@ from io import StringIO
 import sys
 
 class CaptureOutput(list):
+    '''Capture the terminal output.'''
 
     def __enter__(self):
         self._stdout = sys.stdout

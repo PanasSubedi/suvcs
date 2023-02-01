@@ -3,6 +3,8 @@ import os
 from suv_data import get_suv_directories
 
 def print_in_color(content_to_print, color, *args, **kwargs):
+    '''Displays the given string in terminal in the provided color.'''
+
     class bcolors:
         HEADER = '\033[95m'
         OKBLUE = '\033[94m'
@@ -17,6 +19,7 @@ def print_in_color(content_to_print, color, *args, **kwargs):
     print(f"{getattr(bcolors, color)}{content_to_print}{bcolors.ENDC}", *args, **kwargs)
 
 def get_file_set(directory):
+    '''Gets all the files in a directory as a set.'''
 
     file_paths = set()
     for root, directories, files in os.walk(directory):
@@ -26,6 +29,8 @@ def get_file_set(directory):
     return file_paths
 
 def check_init(func):
+    '''Decorator to check if suv has been initialized. If not, stops program execution.'''
+
     def wrapper(*args, **kwargs):
         suv_directories = get_suv_directories(get_working_directory())
         for directory in suv_directories:
@@ -37,6 +42,8 @@ def check_init(func):
     return wrapper
 
 def get_working_directory():
+    '''Return the current working directory.'''
+    
     from dotenv import load_dotenv
     load_dotenv()
 

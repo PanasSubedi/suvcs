@@ -4,6 +4,8 @@ from helpers.delta_helpers import apply_delta
 from helpers.commit_helpers import get_commit
 
 def update_directory_content(directory, commits):
+    '''Update an empty directory based on a list of commit hashes.'''
+
     for commit_hash in commits:
         commit_data = get_commit(commit_hash)
         new_files, removed_files, changed_files = commit_data.get('changes')
@@ -29,6 +31,8 @@ def update_directory_content(directory, commits):
                 file.writelines(new_file_content)
 
 def remove_directory_content(directory):
+    '''Empty a directory.'''
+
     for file_dir in os.listdir(directory):
         file_path = os.path.join(directory, file_dir)
         if file_dir == '.suv':
@@ -39,6 +43,7 @@ def remove_directory_content(directory):
             os.remove(file_path)
 
 def get_commit_path(commit_hash_id, commit_tree):
+    '''Get the path to a commit in a given commit tree. Works by always following the parent.'''
 
     path = []
     root_reached = False
