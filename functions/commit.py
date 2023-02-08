@@ -43,23 +43,16 @@ def commit():
             'message': message,
         }
         commit_hash = _hash_commit(commit_data)
-<<<<<<< HEAD
 
-        commit_data['hash'] = commit_hash
-        commit_data['timestamp'] = int(datetime.utcnow().timestamp())
-
-        branch_data = get_branch_data()
-        branch_data[branch_data['current_branch']]['commits'].append(commit_hash)
-        
-        store_branch_data(branch_data)
-=======
-        
         # timestamp added after hashing to make hash value
         # consistent and replicable
         commit_data['timestamp'] = int(datetime.utcnow().timestamp())
         commit_data['hash'] = commit_hash
 
->>>>>>> main
+        branch_data = get_branch_data()
+        branch_data[branch_data['current_branch']]['commits'].append(commit_hash)
+        
+        store_branch_data(branch_data)
         store_commit(commit_data)
         add_commit_to_tree(commit_hash)
         set_current_commit(commit_hash)
