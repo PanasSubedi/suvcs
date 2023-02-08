@@ -1,6 +1,7 @@
 import os
 
 from helpers.app_helpers import get_working_directory
+from functions.branch import add_branch, set_branch
 from suv_data import get_suv_directories
 
 def create_directory(directory):
@@ -34,5 +35,7 @@ def init(verbose=True):
 
     if directories_created:
         print("Initialized repo at {}".format(working_directory))
+        add_branch("main")
+        set_branch("main")
     elif verbose:
         print("SUV already initialized.")
