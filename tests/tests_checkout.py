@@ -6,7 +6,7 @@ import os, shutil
 from helpers.app_helpers import get_working_directory
 from helpers.test_helpers import CaptureOutput
 
-from functions.checkout import _get_commit_hash, checkout
+from functions.checkout import _get_commit_hash_input, checkout
 from functions.users import set_author
 from functions.init import init
 from functions.commit import commit
@@ -49,7 +49,7 @@ class TestCheckout(unittest.TestCase):
     def test__get_commit_hash(self, mock_input):
         
         with CaptureOutput() as output:
-            input_hash = _get_commit_hash()
+            input_hash = _get_commit_hash_input()
 
         self.assertEqual(len(output), 3)
         self.assertEqual(output[0], output[1], output[2])

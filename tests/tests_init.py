@@ -31,7 +31,8 @@ class TestInit(unittest.TestCase):
         with CaptureOutput() as output:
             init()
             init()
-
-        self.assertEqual(len(output), 2)
+            
         self.assertTrue(output[0].startswith("Initialized repo at"))
-        self.assertEqual(output[1], "SUV already initialized.")
+        self.assertEqual(output[1], "Branch added.")
+        self.assertEqual(output[2], "Branch set to main.")
+        self.assertEqual(output[3], "SUV already initialized.")
